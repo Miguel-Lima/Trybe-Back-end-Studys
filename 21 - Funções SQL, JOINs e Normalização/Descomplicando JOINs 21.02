@@ -1,0 +1,43 @@
+O que é um JOIN?
+Em alguns casos, uma tabela pode não possuir toda a informação necessária. Em função disso, existe a opção de usar os diversos 
+tipos de JOIN para combinar em um mesmo resultado registros de duas ou mais tabelas. Esses tipos são: INNER JOIN, LEFT JOIN e RIGHT JOIN, para combinar 
+duas ou mais tabelas, e SELF JOIN, quando uma tabela precisa ser combinada consigo mesma.
+
+❎ ❎ ❎
+
+Como utilizar o INNER JOIN:
+INNER JOIN permite retornar todos os resultados em que a condição da cláusula ON for satisfeita. A sintaxe de um INNER JOIN é a seguinte:
+
+SELECT t1.coluna, t2.coluna
+FROM tabela1 AS t1
+INNER JOIN tabela2 AS t2
+ON t1.coluna_em_comum = t2.coluna_em_comum;
+
+❎ ❎ ❎
+
+Por que usamos o alias (AS)?
+O alias AS é usado para apelidar qualquer parte da sua query. Isso ajuda o sistema de banco de dados a identificar a qual 
+coluna estamos nos referindo, evitando erros de ambiguidade de nome de colunas, além de tornar suas queries mais concisas e legíveis.
+
+SELECT a.first_name, a.actor_id, f.actor_id
+FROM sakila.actor AS a
+INNER JOIN sakila.film_actor AS f
+ON a.actor_id = f.actor_id;
+
+❎ ❎ ❎
+
+Como utilizar o LEFT JOIN e o RIGHT JOIN:
+
+LEFT JOIN: quando utilizamos o LEFT JOIN, focamos a tabela da esquerda. São retornados todos os registros da tabela
+ da esquerda e valores correspondentes da tabela da direita, caso existam. Valores que não possuem correspondentes são exibidos como nulos.
+
+RIGHT JOIN: quando utilizamos o RIGHT JOIN, focamos a tabela da direita. São retornados todos os registros da tabela 
+da direita e valores correspondentes da tabela da esquerda, caso existam. Valores que não possuem correspondentes são exibidos como nulos.
+
+INNER JOIN: finalmente, temos o INNER JOIN, que foca em trazer somente os registros que possuem valores correspondentes em ambas as tabelas.
+
+❎ ❎ ❎
+
+O que é SELF JOIN e quando utilizá-lo:
+Os tipos de JOIN que você viu até agora precisam necessariamente que mais de uma tabela seja incluída em uma query para que um resultado possa ser gerado. 
+O SELF JOIN não possui esse requisito. Vamos ver a seguir algumas das aplicações do SELF JOIN.
