@@ -1,0 +1,146 @@
+Quando usar WHERE ?
+Exemplo:
+SELECT * FROM sakila.film
+WHERE title NOT LIKE 'academy%';  (Pesquise filmes que não comecem com a palavra academy)
+
+Resumo - Quando desejar pesquisar algo em específico.
+
+OBS: Vem sempre de ORDER BY e LIMIT
+
+❎ ❎ ❎
+
+Seguintes operadores:
+-- OPERADOR - DESCRIÇÃO
+=   IGUAL
+>   MAIOR QUE
+<   MENOR QUE
+>=  MAIOR QUE OU IGUAL
+<=  MENOR QUE OU IGUAL
+<>  DIFERENTE DE
+AND OPERADOR LÓGICO E
+OR  OPERADOR LÓGICO OU
+NOT NEGAÇÃO
+IS  COMPARA COM VALORES BOOLEANOS (TRUE, FALSE, NULL)
+
+❎ ❎ ❎
+
+Exemplos de sinais usados para filtragem:
+
+SELECT * FROM sakila.film
+WHERE title LIKE '%don';
+
+- Resultado da pesquisa. Encontra qualquer resultado finalizando com 'don'
+
+❎ ❎ ❎
+
+SELECT * FROM sakila.film
+WHERE title LIKE 'plu%';
+
+- Resultado da pesquisa. Encontra qualquer resultado iniciando com 'plu'
+
+❎ ❎ ❎
+
+SELECT * FROM sakila.film
+WHERE title LIKE '%plu%';
+
+- Resultado da pesquisa. Encontra qualquer resultado que contém 'plu'
+
+❎ ❎ ❎
+
+SELECT * FROM sakila.film
+WHERE title LIKE 'p%r';
+
+- Resultado da pesquisa. Encontra qualquer resultado que inicia com 'p' e finaliza com 'r'
+
+❎ ❎ ❎
+
+SELECT * FROM sakila.film
+WHERE title LIKE '_C%';
+
+- Resultado da pesquisa. Encontra qualquer resultado em que o segundo caractere da frase é 'C'
+
+❎ ❎ ❎
+
+SELECT * FROM sakila.film
+WHERE title LIKE '________';
+
+- Resultado da pesquisa. Encontra qualquer resultado em que o título possui exatamente 8 caracteres
+
+❎ ❎ ❎
+
+SELECT * FROM sakila.film
+WHERE title LIKE 'E__%';
+
+- Resultado da pesquisa. Encontra todas as palavras com no mínimo 3 caracteres e que iniciam com E
+
+❎ ❎ ❎
+
+Operador IN:
+SELECT * FROM sakila.actor
+WHERE first_name = 'PENELOPE'
+OR first_name = 'NICK'
+OR first_name = 'ED'
+OR first_name = 'JENNIFER';
+
+Uma forma melhor de fazer essa mesma pesquisa seria usando o IN:
+SELECT * FROM sakila.actor
+WHERE first_name IN ('PENELOPE','NICK','ED','JENNIFER');
+
+❎ ❎ ❎
+
+Operador BETWEEN:
+Torna possível fazer pesquisas dentro de uma faixa inicial e final.
+Exemplo:
+SELECT title, length FROM sakila.film
+WHERE length BETWEEN 50 AND 120; 
+
+Resultado: Haverá elementos da tabela organizados começando com aqueles que possuam length 50 e terminando com os de 120.
+
+❎ ❎ ❎
+
+Encontrando dados por data:
+Encontrar pagamentos realizados na data 2005-07-31 na tabela sakila.payment.
+
+Usando a função DATE(coluna_do_tipo_date): 
+SELECT * FROM sakila.payment
+WHERE DATE(payment_date) = '2005-07-31';
+
+- Resultado da pesquisa. Encontra todos os pagamentos deste dia, ignorando horas, minutos e segundos.
+
+❎ ❎ ❎
+
+Usando LIKE para valores aproximados:
+SELECT * FROM sakila.payment
+WHERE payment_date LIKE '2005-07-31%';
+
+- Resultado da pesquisa. Encontra todos pagamentos deste dia, ignorando horas, minutos e segundos
+
+❎ ❎ ❎
+
+SELECT * FROM sakila.payment
+WHERE payment_date LIKE '2005-08-20 00:30:52';
+
+- Resultado da pesquisa. Encontra um pagamento com dia e hora exatos
+
+❎ ❎ ❎
+
+Usando BETWEEN:
+SELECT *
+FROM sakila.payment
+WHERE payment_date BETWEEN '2005-05-26 00:00:00' AND '2005-05-27 23:59:59';
+
+- Resultado da pesquisa. Encontra pagamentos especificando um valor mínimo e um valor máximo para a data
+
+❎ ❎ ❎
+
+Selecionando apenas partes de uma data:
+-- Teste cada um dos comandos a seguir:
+SELECT DATE(payment_date) FROM sakila.payment; -- YYYY-MM-DD
+SELECT YEAR(payment_date) FROM sakila.payment; -- Ano
+SELECT MONTH(payment_date) FROM sakila.payment; -- Mês
+SELECT DAY(payment_date) FROM sakila.payment; -- Dia
+SELECT HOUR(payment_date) FROM sakila.payment; -- Hora
+SELECT MINUTE(payment_date) FROM sakila.payment; -- Minuto
+SELECT SECOND(payment_date) FROM sakila.payment; -- Segundo
+
+❎ ❎ ❎

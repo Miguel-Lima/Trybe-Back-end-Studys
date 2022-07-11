@@ -1,0 +1,45 @@
+Docker Compose o que é ?
+É uma receita, porém ele indica todos os componentes que serão utilizados e também em que ordem cada container deve ser executado.
+Compose orquestra todos os containers que comandamos.
+
+❎ ❎ ❎
+
+Criando um arquivo docker-compose.yaml e seu uso com o Compose.
+Colocando no ar um site Wordpress com MYSQL:
+
+Crie uma pasta chamada wordpress (qualquer nome) em seguida cria um arquivo chamado docker-compose.yaml e atribua as seguintes informações dentro: 
+
+version: '3'
+services:
+  db:
+    image: mysql:5.3
+    volumes:
+       - db_data:/var/lib/mysql
+    restar: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+     - "8000:80"
+    restart: always
+    environment:
+    WORDPRESS_DB_HOST: db:3306
+    WORDPRESS_DB_USER: wordpress
+    WORDPRESS_DB_PASSWORD: wordpress
+volumes:
+  db_data:
+
+❎ ❎ ❎
+
+Colocando este serviço no ar (Lembre-se de estar dentro do arquivo):
+docker-compose up
+Basta acessar agora o localhost 8000 indicado no ports.
+
+❎ ❎ ❎

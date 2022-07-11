@@ -1,0 +1,53 @@
+Por quê usar Docker ? 
+Automatização. Ganho de velocidade para adaptar projetos e trabalhos dentro de Sistemas Operacionais exclusivos.
+ 
+❎ ❎ ❎
+
+Acessando o docker-ubuntu-vnc-desktop (exemplo):
+Comando - docker run -p 6080:80 -v /dev/shm:/dev/shm dorowu/ubuntu-desktop-lxde-vnc
+
+Pós comando apenas aplicar o localhost do servidor - http://localhost:6080/.
+
+❎ ❎ ❎
+
+Visualizando e verificando status dockers containers presente na máquina:
+docker container ls -a
+
+❎ ❎ ❎
+
+Criando e iniciando um docker container:
+docker container create -it ubuntu bash
+docker start name_container
+
+❎ ❎ ❎
+
+Retomando controle de um container:
+docker container attach name_container ou docker exec -it name_container bash
+
+❎ ❎ ❎
+
+Rodando dois containers ao mesmo tempo na mesma máquina:
+docker run -it -d ubuntu bash  - Container 1
+docker container run --name ubuntu2 -dit ubuntu  - Container 2
+
+❎ ❎ ❎
+
+Excluindo dockers containers e liberando espaço no computador:
+docker system prune    -  Deletando os containers
+
+docker system prune -a --volumes - Visualizando e retirando o volume e imagens de forma GERAL
+
+❎ ❎ ❎
+
+Excluindo containers específicos:
+docker rm name_container   (name_container -  Nome gerado pelo docker para o container)
+docker container rm -f  name_container   - Forçando a remoção do container
+
+❎ ❎ ❎
+
+Inicializando, pausando e reiniciando um docker container:
+docker container stop name_container
+docker container star name_container
+docker container restart name_container
+
+❎ ❎❎

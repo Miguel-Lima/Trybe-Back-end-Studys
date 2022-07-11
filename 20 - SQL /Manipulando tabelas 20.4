@@ -1,0 +1,75 @@
+Apagou informação que não devia ou terminou todos exercícios do dia?
+Como apagar (dropar) o banco sakila e recriá-lo do zero:
+
+1- Abra o MySQL Workbench e se conecte a ele.
+2- Selecione o banco sakila na lista de bancos de dados com o botão direito e clique em "Drop Schema".
+3- Selecione "Drop Now".
+4- Clique com o botão direito neste link e salve como arquivo .sql.
+5- Selecione todo o conteúdo do arquivo (CTRL + A) e cole-o dentro de uma janela de nova query no MySQL Workbench.
+6- Clique em executar para restaurar o banco de dados.
+7- That's IT! Está pronto para quebrar brincar com ele de novo!
+
+❎ ❎ ❎
+
+Informação importante sobre os tipos de aspas:
+Backticks ou crase (``): são usadas para identificar nome de tabelas e colunas. São necessárias apenas quando o identificador 
+for uma palavra reservada do MySQL, ou quando o nome da tabela ou coluna contiver espaços em branco.
+
+Aspas simples (''): devem ser usadas em valores do tipo string. Aspas simples são aceitas na maioria dos
+Sistemas de Gerenciamento de Banco de Dados, sendo assim, é preferível usar aspas simples no lugar das aspas duplas.
+
+❎ ❎ ❎
+
+Inserindo várias linhas de uma vez:
+INSERT INTO nome_da_tabela (coluna1, coluna2) VALUES
+('valor_1','valor_2'),
+('valor_3','valor_4'),
+('valor_5','valor_6');
+
+❎ ❎ ❎
+
+Podemos ignorar os erros durante a inserção usando o INSERT IGNORE. Considere a tabela e a query a seguir:
+INSERT IGNORE INTO pessoas (id, name) VALUES
+(4,'Gloria'), -- Sem o IGNORE, essa linha geraria um erro e o INSERT não continuaria.
+(5,'Amanda');
+
+-- Pesquisando agora, você verá que a informação duplicada não foi inserida.
+-- Porém os dados corretos foram inseridos com sucesso.
+SELECT * FROM pessoas;
+
+IMPORTANTE: Lembre-se de que o INSERT IGNORE vai pular os outros erros silenciosamente também.
+
+❎ ❎ ❎
+
+Inserindo valores em colunas com auto_increment:
+Primeiramente, é preciso saber que o auto_increment é uma funcionalidade que todos os bancos de dados possuem. 
+Ela permite que valores sejam gerados automaticamente cada vez que uma nova linha é inserida em uma tabela que tem essa restrição ativa. 
+Ao inserir um novo ator na tabela sakila.actor, caso outros atores ainda não tenham sido inseridos desde que o banco foi restaurado, o próximo valor 
+que será gerado para actor_id será o valor do último id registrado acrescido de 1. 
+Por exemplo: se o último id registrado foi 200, o próximo valor gerado será 200 + 1.
+
+❎ ❎ ❎
+
+Com isso em mente, a coluna que possui auto_increment é omitida no INSERT, uma vez que o valor já é gerado automaticamente:
+INSERT INTO sakila.actor (first_name, last_name)
+VALUES('Marcelo','Santos');
+
+❎ ❎ ❎
+
+INSERT SELECT (Inserindo dados de uma outra tabela):
+INSERT INTO tabelaA (coluna1, coluna2)
+    SELECT tabelaB.coluna1, tabelaB.coluna2
+    FROM tabelaB
+    WHERE tabelaB.nome_da_coluna <> 'algumValor'
+    ORDER BY tabelaB.coluna_de_ordenacao;
+
+Assim, estaríamos extraindo a coluna1 e a coluna2 da tabelaB e as inserindo na tabelaA, de acordo com a condição que for passada no WHERE.
+É possível usar também SELECT * FROM e copiar todos os dados de todas as colunas de uma tabela para outra, mas nessa situação a tabelaA e a tabelaB 
+precisam obrigatoriamente possuir a mesma quantidade de colunas, e os tipos de dados das colunas correspondentes devem ser iguais.
+Com essa funcionalidade, é fácil criar tabelas temporárias para testes ou por necessidade. 
+
+Por exemplo, para trazer os dados da tabela sakila.staff para a tabela sakila.actor, poderíamos fazer:
+INSERT INTO sakila.actor (first_name, last_name)
+	SELECT first_name, last_name FROM sakila.staff;
+
+❎ ❎ ❎

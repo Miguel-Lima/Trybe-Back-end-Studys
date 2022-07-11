@@ -1,0 +1,66 @@
+Obtendo imagem Docker diretamente do Registry e já deixá-la em nosso computador:
+docker pull (apline:3.14) (exemplo) 
+
+❎ ❎ ❎ 
+
+Executando a imagem docker hello-world:
+docker run hello-world
+Neste momento, o Docker verifica se a imagem existe localmente;
+Se a imagem existe, o docker começa o processo de subir o container baseado nesta imagem.
+
+❎ ❎ ❎
+
+Verificando a lista de containers atuais:
+docker ps -a
+
+❎ ❎ ❎
+
+Criando vários containers em uma única IMAGEM:
+execute novamente o comando docker run hello-world
+visualize com o comando docker ps -a  
+Passará a existir dois containers com a mesma imagem 'hello-world'
+Podemos ter vários containers reproduzindo uma mesma imagem Docker 🤩!
+
+❎ ❎ ❎
+
+Revomendo containers através do seu ID:
+docker ps -a   -  Visualize os containers e suas características
+docker rm -f CONTAINER ID
+
+❎ ❎ ❎
+
+Removendo imagens através do seu ID:
+docker ps -a
+docker rmi IMAGE ID
+
+❎ ❎ ❎
+
+Criando uma imagem Docker que, quando executada como um container, vai imprimir na tela a seguinte mensagem: Eu sou uma pessoa estudante da Trybe!
+FROM alpine:3.14  - FROM significa que vamos começar a construção desta imagem a partir da imagem Docker já existente!
+CMD ["echo", "Eu sou uma pessoa estudante da Trybe!"] -  CMD mostra qual comando deve ser utilizado ao iniciar a imagem como um container;
+docker build -t primeira-imagem .
+Uma flag -t, que indicará qual será o nome da imagem, e também a tag, se utilizar o formato <nome>:<tag>;
+Um contexto, ou seja, em qual caminho de pasta o Docker deve se basear para processar o arquivo Dockerfile.
+Normalmente utilizamos apenas . (ponto final), que indica a pasta atual.
+
+❎ ❎ ❎
+
+Executando um novo container com nossa imagem e verificando se existe de fato a frase do comando CMD
+docker run --rm primeira-imagem
+
+❎ ❎ ❎
+
+Criando e acessando um projeto REACT dentro de um Dockerfile:
+FROM node  
+# RUN npm i -g create-react-app
+# RUN create-react-app app
+WORKDIR /app     
+COPY . .
+CMD npm start
+
+❎ ❎ ❎
+
+Acessando arquivos dockers mesmo pós exclusão total dos arquivos:
+"Exemplo" docker run --name react -p 3000:3000 miguelinux/test-react
+O Docker irá procurar arquivos que possuem informações relacionadas a porta e ao nome. 
+Podemos dizer assim que ela poderá ser acessada de qualquer local em uma máquina.
