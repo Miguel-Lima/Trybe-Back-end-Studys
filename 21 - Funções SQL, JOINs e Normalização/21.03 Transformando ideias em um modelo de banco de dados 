@@ -1,0 +1,45 @@
+Tipos de dados:
+- BOOLEANO / Pode receber 0 ou 1 e o valor padrão é nulo
+
+- CARACTERES / Tamanho Fixo CHAR(5) Permite inserir até uma quantidade de caracteres e sempre ocupa todo o espaço reservado.
+             / Tamanho Variável - VARCHAR(10) - Permite inserir até uma quantidade que for definida, porém só ocupa o espaço que for preenchido.
+
+- NÚMEROS  / Valores exatos inteiros - TINYINT = 0 A 255 UNSIGNED OU -128 A 127 SIGNED
+           / Unsigned - Permite armazenar somentes valores positivos
+           / Signed - Permite armazenar valores negativos e positivos
+           / Valores exatos Inteiros:
+           - SMALLINT
+           - MEDIUMINT
+           - INT
+           - BIGINT
+           / Valores exatos com precisão decimal - DECIMAL  EX: DECIMAL(5,2) = 199.99
+           /FLOAT/REAL EX: 10.9
+           /DOUBLE EX: 49.90
+
+- TEMPORAIS / DATE  YYYY-MM-DD
+            / TIME  HH:MM:SS
+            / YEAR  1901 E 2155
+            / DATETIME Junta o DATE e o TIME
+            / TIMESTAMP Igual o DATETIME mas opera com base de fuso horário
+
+Primary Key:
+Uma chave primária é uma coluna ou grupo de colunas usadas para identificar uma linha em uma tabela.
+
+Foreign Key:
+Uma chave estrangeira é uma coluna ou grupo de colunas em uma tabela que identifica unicamente uma linha em outra tabela.
+
+
+Normalização:
+É uma técnica para organizar tabelas relacionadas no banco de dados com o objetivo de reduzir a redudância de dados.
+
+Como Normalizar ?
+Separar os dados relacionados em tabelas diferentes.
+
+Com a Normalização:
+Separação de dados relacionados em suas próprias tabelas;
+Integridade de Dados;
+Redução de espaço gasto no banco de dados.
+
+1a Forma Normal:
+As Tabelas devem ser escaláveis (Preparadas para grandes quantidades de dados);
+As Tabelas devem ser extensíveis (Mudanças não devem quebrar a integridade dos dados)
