@@ -1,0 +1,57 @@
+O que é Node.js?
+O Node.js surgiu do V8, que é a ferramenta do Google Chrome responsável por ler e executar as instruções que escrevemos em JavaScript, processo 
+comumente chamado de interpretar o código. O software responsável por interpretar o código é chamado de interpretador, engine e, por vezes, de runtime. 
+Por isso, é comum dizer que o Node.js é um runtime JavaScript.
+
+❎ ❎ ❎
+
+Performance:
+Quando comparado a outras grandes tecnologias, o Node.js nos permite escrever softwares servidores de requisições 
+HTTP de forma muito mais eficiente. Isso se dá pelo fato de que toda leitura e escrita que ele realiza, tanto no 
+disco quanto na rede, é feita de forma não bloqueante.
+▶️ Resumindo: em outras palavras, o Node.js realiza todas as suas operações de entrada e saída de dados de forma assíncrona,
+
+❎ ❎ ❎
+
+Aplicações em tempo real
+A natureza não bloqueante do Node.js permite que alguns recursos sejam implementados na plataforma para facilitar o trabalho com operações em tempo real.
+Bibliotecas como o socket.io permitem que, com poucas linhas de código, aplicações em tempo real relativamente complexas 
+(como chats com suporte a múltiplos usuários, conversas privadas etc.) sejam criadas por completo.
+
+❎ ❎ ❎
+
+Sistema de módulos:
+Um módulo é uma funcionalidade, ou um conjunto de funcionalidades, que se encontram isoladas do restante do código.
+O Node.js possui três tipos de módulos: internos, locais e de terceiros.
+
+❎ ❎ ❎
+
+Módulos internos
+Os módulos internos (ou core modules) são inclusos no Node.js e instalados junto com ele quando baixamos o runtime. Alguns exemplos de core modules são:
+fs: fornece uma API para interagir com o sistema de arquivos de forma geral;
+url: provê utilitários para ler e manipular URLs;
+querystring: disponibiliza ferramentas para leitura e manipulação de parâmetros de URLs;
+util: oferece ferramentas e funcionalidades comumente úteis a pessoas programadoras.
+os: oferece ferramentas e funcionalidades relacionadas ao sistema operacional.
+
+❎ ❎ ❎
+
+Módulos locais
+Os módulos locais são aqueles definidos juntamente à nossa aplicação. Representam funcionalidades ou partes do nosso 
+programa que foram separados em arquivos diferentes. Eles podem ser publicados no NPM para que outras pessoas possam baixá-los e 
+utilizá-los, o que nos leva ao nosso próximo e último tipo de módulo.
+
+❎ ❎ ❎
+
+Módulos de terceiros
+Os módulos de terceiros são aqueles criados por outras pessoas e disponibilizados para uso através do npm. 
+Conforme mencionado, nós também podemos criar e publicar nossos próprios módulos, seja para utilizarmos em
+diversas aplicações diferentes, seja para permitir que outras pessoas os utilizem.
+
+❎ ❎ ❎
+
+Recapitulando:
+Módulos são "caixinhas" que isolam suas funções, variáveis e afins de outras partes do código; eles podem ser 
+internos (que vêm com o Node.js), locais (criados por nós na nossa máquina) ou de terceiros (baixados do NPM).
+
+O NPM é o site em que publicamos nossos pacotes e npm é a ferramenta de linha de comando que realiza o gerenciamento desses pacotes pra nós.

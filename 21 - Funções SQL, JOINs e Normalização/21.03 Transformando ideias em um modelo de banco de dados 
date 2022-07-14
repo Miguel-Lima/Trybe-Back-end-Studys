@@ -22,12 +22,15 @@ Tipos de dados:
             / DATETIME Junta o DATE e o TIME
             / TIMESTAMP Igual o DATETIME mas opera com base de fuso horário
 
+❎ ❎ ❎
+
 Primary Key:
 Uma chave primária é uma coluna ou grupo de colunas usadas para identificar uma linha em uma tabela.
 
 Foreign Key:
 Uma chave estrangeira é uma coluna ou grupo de colunas em uma tabela que identifica unicamente uma linha em outra tabela.
 
+❎ ❎ ❎
 
 Normalização:
 É uma técnica para organizar tabelas relacionadas no banco de dados com o objetivo de reduzir a redudância de dados.
@@ -43,3 +46,19 @@ Redução de espaço gasto no banco de dados.
 1a Forma Normal:
 As Tabelas devem ser escaláveis (Preparadas para grandes quantidades de dados);
 As Tabelas devem ser extensíveis (Mudanças não devem quebrar a integridade dos dados)
+
+Regras:
+Colunas devem possuir apenas um valor;
+Valores em uma coluna devem ser do mesmo tipo de dados;
+Cada coluna deve possuir um nome único;
+A ordem dos dados registrados em uma tabela não deve afetar a integridade dos dados.
+
+2ª Forma Normal
+Para a Segunda Forma Normal, devemos atentar para o seguinte:
+A tabela deve estar na 1ª Forma Normal;
+A tabela não deve possuir dependências parciais.
+
+3ª Forma Normal
+Por fim, a Terceira Forma Normal estabelece que:
+A tabela deve estar na 1ª e 2ª Formas Normais;
+A tabela não deve conter atributos (colunas) que não sejam dependentes exclusivamente da PK (chave primária).
