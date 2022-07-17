@@ -55,3 +55,22 @@ Módulos são "caixinhas" que isolam suas funções, variáveis e afins de outra
 internos (que vêm com o Node.js), locais (criados por nós na nossa máquina) ou de terceiros (baixados do NPM).
 
 O NPM é o site em que publicamos nossos pacotes e npm é a ferramenta de linha de comando que realiza o gerenciamento desses pacotes pra nós.
+
+❎ ❎ ❎
+
+Importando Módulos:
+Módulos locais
+Quando queremos importar um módulo local, precisamos passar para o require o caminho do módulo, seguindo a mesma assinatura. 
+Por exemplo, require('./meuModulo'). Note que a extensão (.js) não é necessária: por padrão, o Node 
+já procura por arquivos terminados em .js ou .json e os considera como módulos.
+
+Módulos internos
+Para utilizarmos um módulo interno, devemos passar o nome do pacote como parâmetro para a função require. 
+Por exemplo, require('fs') importa o pacote fs, responsável pelo sistema de arquivos.
+
+Módulos de terceiros
+Módulos de terceiros são importados da mesma forma que os módulos internos: passando seu nome 
+como parâmetro para a função require. A diferença é que, como esses módulos não são nativos do Node.js, 
+precisamos primeiro instalá-los na pasta do projeto em que queremos utilizá-los.
+
+❎ ❎ ❎
