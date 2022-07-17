@@ -1,0 +1,189 @@
+Callbacks:
+const fs = require('fs');
+
+fs.readFile('./arquivo.txt', (err, content) => {
+  if (err) {
+    console.error(`Erro ao ler o arquivo: ${err.message}`);
+    return;
+  }
+
+  console.log(`Arquivo lido com sucesso. Conteúdo: ${content.toString('utf8')}`);
+});
+
+Note que o exemplo acima realiza a leitura de um arquivo e após o término chama uma função de callback. Essa função recebe dois parâmetros:
+✅ O primeiro, que chamamos de err, é um erro que pode ter ocorrido durante a leitura do arquivo.
+✅ Observação: Caso nenhum erro tenha ocorrido, esse parâmetro será undefined.
+
+✅ O segundo parâmetro, nesse caso, é o conteúdo do arquivo, que está em forma de uma sequência de bytes, chamados de content.
+✅ Observação: Caso ocorra um erro na leitura do arquivo, esse parâmetro será undefined.
+
+Agora, vamos entender como esse código funciona:
+✅ Primeiro, pedimos que o Node.js leia o arquivo e passamos uma função de callback;
+✅ Quando a leitura do arquivo é concluída ou um erro acontece, a função callback é chamada;
+✅ Dentro dela, a primeira coisa que fazemos é verificar se existe um erro. Caso exista, escrevemos ele no console e encerramos a execução com o return;
+✅ Observação: Caso nenhum erro tenha acontecido, sabemos que nosso arquivo foi lido com sucesso e, portanto, seu 
+conteúdo está no segundo parâmetro, que chamamos de content.
+✅ Formatos de Callback que recebem dois parâmentros: erros e resultado, assim como vimos no exemplo acima, são chamados de 
+node-style callbacks e são, por convenção, a melhor maneira de se estruturar uma callback.
+
+✴️Importante: Toda API de módulos nativos do Node.js utiliza esse mesmo formato de callbacks.
+
+
+Promises:
+Uma promessa/função é criada e dentro dela existe código/ação a ser executado. Se o código 
+é executado sem nenhum problema, a Promise é resolvida através da função resolve; se algo dá errado durante a 
+execução do código, a Promise é rejeitada através da função reject.
+
+Além disso, outra grande vantagem do uso das Promises está em podermos registrar vários callbacks de sucesso
+para serem executados um após o outro, sempre recebendo o resultado do callback anterior.
+Observação: Para fazermos isso, utilizamos vários .then em uma mesma Promise. As funções que passamos para cada 
+then serão executadas em sequência, e o resultado de uma será passado para a próxima.
+
+Exemplo 1: Tratando erros de forma síncrona.
+function dividirNumeros(num1, num2) {
+  if (num2 == 0) throw new Error("Não pode ser feito uma divisão por zero");
+
+  return num1 / num2;
+}
+
+try {
+  const resultado = dividirNumeros(2, 1);
+  console.log(`resultado: ${resultado}`);
+} catch (e) {
+  console.log(e.message);
+}
+
+Exemplo 2: Tratando erros de forma assíncrona.
+function dividirNumeros(num1, num2) {
+  const promise = new Promise((resolve, reject) => {
+    if (num2 == 0) reject(new Error("Não pode ser feito uma divisão por zero"));
+
+    const resultado = num1 / num2;
+    resolve(resultado)
+  });
+
+  return promise;
+}
+
+dividirNumeros(2, 1)
+  .then(result => console.log(`sucesso: ${result}`))
+  .catch(err => console.log(`erro: ${err.message}`));
+
+
+Sempre que precisarmos criar uma nova Promise, invocaremos o construtor através da 
+palavra-chave new. Para esse construtor, devemos passar uma função chamada de executor, 
+é essa função quem vai, de fato, tentar cumprir a promessa que estamos fazendo.
+Observação: A função executor recebe outras duas funções como parâmetros: resolve e reject.
+
+const fs = require('fs');
+
+function readFilePromise (fileName) {
+  return new Promise((resolve, reject) => {
+
+    fs.readFile(fileName, (err, content) => {
+      if (err) return reject(err);
+      resolve(content);
+    });
+
+  });
+}
+
+✅ Recebemos como parâmetro o nome do arquivo que queremos ler: fileName na função readFilePromise(fileName);
+
+✅ Criamos e retornamos uma nova Promise, Promise((resolve, reject) => {};
+
+✅ Chamamos o módulo nativo do node, fs, para realizar a leitura desse arquivo, fs.readFile(fileName, (err, content) => {});
+
+✅ Dentro da callback fs.readFile(fileName, (err, content) => {}) que passamos para a função readFile, verificamos se 
+ocorreu um erro (if (err)). Se sim, rejeitamos a Promise e encerramos a execução - reject(err);
+
+✅ Caso não tenha ocorrido nenhum erro, resolvemos a Promise com o resultado da leitura do arquivo - resolve(content).
+
+✅ Observação: Dessa forma, quem chamar nossa função poderá consumir os resultados da leitura do 
+arquivo ou tratar qualquer erro que ocorrer utilizando Promises.
+
+
+Resposta: Essa funcionalidade nos permite criar estruturas de pipeline, em que uma operação recebe como 
+entrada o resultado da operação anterior e todos esses resultados podem ser compostos e formar um único resultado de forma extremamente fácil!
+
+Para exemplificar como isso ocorre, vamos reescrever o código que nos levou ao callback hell mas, dessa vez, utilizando Promises:
+
+const fs = require('fs');
+
+function readFilePromise (fileName) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(fileName, (err, content) => {
+      if (err) return reject(err);
+      resolve(content);
+    });
+  });
+}
+
+readFilePromise('file1.txt') // A função me promete que vai ler o arquivo
+  .then((content) => { // Caso arquivo 1 seja lido,
+    console.log(`Lido file1.txt com ${content.byteLength} bytes`); // Escrevo o resultado no console
+    return readFilePromise('file2.txt'); // Chamo novamente a função, que me retorna uma nova Promise
+  })
+  .then(content => { // Caso a Promise retornada pelo `then` anterior seja resolvida,
+    console.log(`Lido file2.txt com ${content.byteLength} bytes`); // Escrevemos o resultado no console
+    return readFilePromise('file3.txt'); // E chamamos a função novamente, recebendo uma nova promessa
+  })
+  .then((content) => { // Caso a promessa de leitura do `file3.txt` seja resolvida,
+    console.log(`Lido file3.txt com ${content.byteLength} bytes`); // Logamos o resultado no console
+  })
+  .catch((err) => { // Caso qualquer uma das promessas ao longo do caminho seja rejeitada
+    console.log(`Erro ao ler arquivos: ${err.message}`); // Escrevemos o resultado no console
+  });
+
+❎ ❎ ❎
+
+Utilizando async/await:
+const fs = require('fs').promises;
+
+async function main() {
+  try {
+    await fs.writeFile('./meu-arquivo.txt', 'Meu textão');
+    console.log('Arquivo escrito com sucesso!');
+  } catch (err) {
+    console.error(`Erro ao escrever o arquivo: ${err.message}`);
+  }
+}
+
+main()
+
+❎ ❎ ❎
+
+Toda função na qual utilizamos async, automaticamente passa a retornar uma Promise, 
+que será rejeitada em caso de erro, e resolvida em caso de sucesso.
+Quando usamos async/await temos como resultado um código com sintaxe quase idêntica à utilizada para código síncrono.
+
+❎ ❎ ❎
+
+Rodando promessas simultaneamente com Promise.all
+
+const fs = require('fs').promises;
+
+Promise.all([
+  fs.readFile('file1.txt'),
+  fs.readFile('file2.txt'),
+  fs.readFile('file3.txt'),
+])
+  .then(([file1, file2, file3]) => {
+    const fileSizeSum = file1.byteLength + file2.byteLength + file3.byteLength;
+    console.log(`Lidos 3 arquivos totalizando ${fileSizeSum} bytes`);
+  })
+  .catch((err) => {
+    console.error(`Erro ao ler arquivos: ${err.message}`);
+  });
+
+
+O Promise.all é um método da Promise que nos permite passar um array de Promises e 
+receber de volta uma única Promise. Ela será resolvida com todos os resultados das outras
+Promises assim que as demais já tenham também sido resolvidas. Esse método também nos permite 
+utilizar um único catch, que será chamado caso qualquer uma das Promises seja rejeitada.
+Suponha que no código que vimos anteriormente, todos os arquivos serão lidos ao mesmo tempo e, 
+portanto, não teremos uma forma de saber quando cada um vai terminar de ser lido.
+Mas e se precisarmos do resultado da leitura dos três arquivos?
+Resposta: Promise.all!
+
+❎ ❎ ❎
