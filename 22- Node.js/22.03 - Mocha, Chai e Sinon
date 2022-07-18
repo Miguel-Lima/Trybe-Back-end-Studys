@@ -1,0 +1,64 @@
+Tipo de testes:
+
+▶️ Testes unitários: Trabalham presumindo um escopo limitado a um pequeno fragmento do seu código com interação mínima entre recursos externos.
+
+▶️ Testes de integração: Trabalham presumindo a junção de múltiplos escopos (que tecnicamente devem possuir, cada um, seus próprios testes) com interações entre eles.
+
+▶️ Testes de Ponta-a-ponta: Chamados também de Fim-a-fim (End-to-End; E2E), esses testes pressupõem um fluxo de interação completo com a aplicação, de uma ponta a outra. 
+Aqui, poderíamos pensar uma API que utiliza nossa calculadora - assim como diversas outras funções mais complexas - na hora de realizar uma operação de venda de produtos. 
+Esse teste é o mais completo, pois garante que todos os demais testes estão ou serão desenvolvidos.
+
+❎ ❎ ❎
+
+Estruturando testes com o Mocha:
+O mocha é um framework de testes para JS, isso significa que ele nos ajuda a arquitetar os nossos testes, fornecendo a estrutura e interface para 
+escrevermos os nossos testes.
+
+▶️ O describe nos permite adicionar uma descrição para um teste específico ou um grupo de testes.
+▶️ Já o it nos permite sinalizar exatamente o cenário que estamos testando naquele ponto.
+
+Exemplo:
+describe('Quando a média for menor que 7', () => {
+  it('retorna "reprovado"', () => {
+    //
+  });
+});
+
+❎ ❎ ❎
+
+Aferindo testes com o Chai:
+O chai nos ajudará com as asserções, ou seja, ele nos fornece maneiras de dizermos o que queremos testar e então ele 
+validará se o resultado condiz com o esperado.
+
+const resposta = calculaSituacao(4);
+
+expect(resposta).equals('reprovacao');
+
+No código acima, estamos chamando nossa função e, logo em seguida, afirmamos que seu retorno, armazenado na 
+constante resposta, deve ser igual (equals) a reprovação.
+
+❎ ❎ ❎
+
+Exemplo de código com MOCHA + CHAI:
+
+const { expect } = require('chai');
+
+const calculaSituacao = require('../examples/calculaSituacao');
+
+describe('Quando a média for menor que 7', () => {
+  it('retorna "reprovacao"', () => {
+    const resposta = calculaSituacao(4);
+
+    expect(resposta).equals('reprovacao');
+  });
+});
+
+Resumo do código:
+Observe que o chai foi importado no início do arquivo e o expect foi desconstruído a partir dele. 
+Agora, perceba como o chai nos fornece uma função pronta, equals que vai comparar se o valor "esperado" na resposta 
+é igual ao passado para ele, ou seja, igual a "reprovação".
+
+❎ ❎ ❎
+
+Para tornar nosso teste ainda mais legível e elegante, o chai nos fornece outros getters encadeáveis que possuem um papel puramente estético.
+Por exemplo, o to e o be, que nos permitem escrever nossa assertion da seguinte maneira:
