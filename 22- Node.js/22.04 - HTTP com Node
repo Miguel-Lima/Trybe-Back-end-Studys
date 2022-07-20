@@ -1,0 +1,120 @@
+APIs
+API é uma sigla para Application Programming Interface. Ou seja, Interface de programação de aplicação.
+Isso quer dizer que uma API é, basicamente, qualquer coisa que permita a comunicação, de forma programática, com uma determinada aplicação.
+Um tipo muito comum de API são as APIs HTTP, que permitem que códigos se comuniquem com aplicações através de requisições HTTP. É desse 
+tipo de API que boa parte da web é feita.
+
+❎ ❎ ❎
+
+E o Express?
+O Express é um framework Node.js criado para facilitar a criação de APIs HTTP com Node. Ele nos 
+fornece uma série de recursos e abstrações que facilitam a vida na hora de decidir quais requisições tratar, como tratá-las, quais regras de negócio aplicar e afins.
+O framework foi construído pensando em um padrão de construção de APIs chamado de REST,
+que você vai estudar mais à frente. Seu objetivo é nos ajudar a construir APIs de forma mais fácil, essencialmente nos permitindo
+criar APIs altamente funcionais com metade do trabalho que teríamos para fazer isso de forma manual.
+
+❎ ❎ ❎
+
+Criando uma aplicação com Express:
+mkdir hello-express
+cd hello-express
+npm init -y
+npm i express
+touch index.js
+
+index.js:
+const express = require('express');
+
+const app = express(); // 1
+
+app.get('/hello', handleHelloWorldRequest); // 2
+
+app.listen(3001, () => {
+  console.log('Aplicação ouvindo na porta 3001');
+}); // 3
+
+function handleHelloWorldRequest(req, res) {
+  res.status(200).send('Hello World!'); // 4
+}
+
+Rode a aplicação, lembre-se de mudar no package.json:
+node index.js
+
+
+❎ ❎ ❎
+
+Nodemon
+Para facilitar nosso fluxo de desenvolvimento podemos utilizar um pacote chamado Nodemon,
+que reinicia a aplicação toda vez que editamos e salvamos os nossos arquivos:
+npm i nodemon -D
+
+Para poder automatizar o uso do nodemon, vamos abrir nosso arquivo package.json e adicionar a seguinte linha:
+//...
+// "scripts": {
+//    "test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon index.js"
+//  },
+// ...
+
+Agora, para executarmos nossa aplicação, vamos utilizar o seguinte comando:
+npm run dev
+
+Pronto! Sempre que você fizer qualquer alteração no código e salvar o arquivo, o Nodemon automaticamente reinicia a aplicação para incluir as modificações.
+Faça alguns testes mudando a mensagem retornada e fazendo uma nova requisição para a URL que você criou.
+
+
+❎ ❎ ❎
+
+
+Roteamento:
+request - geralmente chamado de req, contém as informações enviadas pelo cliente ao servidor;
+response - geralmente chamado de res, permite o envio de informações do servidor de volta ao cliente;
+next - função que diz para o Express que aquela callback terminou de ser executada, e que ele deve prosseguir para executar a próxima callback para aquela rota.
+Este parâmetro é opcional e você entenderá melhor o uso do next em breve.
+
+As rotas respondem a requisições que satisfaçam a condição método HTTP + caminho.
+const express = require('express');
+const app = express();
+
+/* Rota com caminho '/', utilizando o método GET */
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+/* Rota com caminho '/', utilizando o método POST */
+app.post('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+/* Rota com caminho '/', utilizando o método PUT */
+app.put('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+/* Rota com caminho '/', utilizando o método DELETE */
+app.delete('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+/* Rota com caminho '/' para qualquer método HTTP */
+app.all('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+/* Ou podemos encadear as requisições para evitar repetir o caminho */
+app
+  .route('/')
+  .get(function (req, res) {
+		// Requisições para rota GET `/` são resolvidas aqui!
+    res.send('Hello World! Get');
+  })
+  .post(function (req, res) {
+		// Requisições para rota POST `/` são resolvidas aqui!
+    res.send('Hello World! post');
+  });
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
+
+❎ ❎ ❎
