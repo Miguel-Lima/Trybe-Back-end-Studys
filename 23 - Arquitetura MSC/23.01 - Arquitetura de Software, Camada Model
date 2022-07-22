@@ -1,0 +1,10 @@
+Arquitetura MSC
+Camada de Modelo (M): Arquivos onde iremos executar as operações do banco de dados, como criar conexões e executar queries.
+Camada de Serviço (S): Arquivos onde iremos estruturar nossas regras de negócio, geralmente é quem chama os métodos definidos na camada de modelo.
+Camada de Controladores (C): Interface mais próxima da pessoa usuária ou de uma requisição, irá processar e chamar as devidas funções da camada de serviço.
+
+❎ ❎ ❎
+
+Model
+O model é onde nós manipulamos e definimos a estrutura dos nossos dados. Todo acesso aos dados deve passar por essa camada.
+Os dados que a aplicação utiliza podem estar armazenados em um banco de dados, acessados através de uma API externa, arquivos ou outros dispositivos de armazenamento.
