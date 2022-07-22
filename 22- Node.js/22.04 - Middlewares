@@ -1,0 +1,29 @@
+Middlewares
+Para o Express, um middleware é uma função que realiza o tratamento de uma request e que pode encerrar essa request, ou chamar o próximo middleware.
+Na prática, essas funções recebem três parâmetros: req, res e next, exatamente como as funções callback que usamos até agora para registrar rotas.
+Middlewares podem retornar qualquer coisa, incluindo Promises. O fato é que o Express ignora o retorno dos middlewares, visto que o importante é se 
+aquele middleware chamou ou não um método que encerra a request, ou a função next.
+
+❎ ❎ ❎
+
+Visualizando o conteúdo das requisições no Console:
+app.use((req, _res, next) => {
+  console.log('req.method:', req.method);
+  console.log('req.path:', req.path);
+  console.log('req.params:', req.params);
+  console.log('req.query:', req.query);
+  console.log('req.headers:', req.headers);
+  console.log('req.body:', req.body);
+  next();
+});
+
+⚠️ Atenção: é importante ressaltar que essa prática não deve ser utilizada em produção, pois serve apenas para dar visibilidade no momento do desenvolvimento.**
+
+❎ ❎ ❎
+
+Pacote express-rescue
+O pacote express-rescue está disponível no npm e nos ajuda com a tarefa de garantir que os erros sempre sejam tratados.
+Para utilizá-lo, primeiro faça a instalação usando o comando npm i express-rescue
+Para adicionarmos os express-rescue, basta passarmos o nosso middleware como parâmetro para a função rescue que importamos do módulo. 
+
+❎ ❎ ❎
